@@ -8,6 +8,9 @@
             <i class="bi bi-plus-circle"></i> Ajouter une categorie
         </a>
     </div>
+    <div class="mb-3">
+        <a href="{{ route('home') }}" class="btn btn-outline-secondary">← Retour</a>
+    </div>
 
     <div class="table-responsive">
         <table class="table table-hover table-bordered shadow-sm align-middle">

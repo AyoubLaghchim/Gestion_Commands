@@ -8,15 +8,13 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Commande;
 use App\Models\Client;
 
 class UserController extends Controller
 {
     //
-    public function index()
-    {
-        return view('users.menu');
-    }
+    
     public function explorer()
     {
         return view('users.explorer');

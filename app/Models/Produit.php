@@ -20,6 +20,11 @@ class Produit extends Model
     {
         return $this->hasMany(LigneCommande::class);
     }
+    public function lignes()
+    {
+        return $this->hasMany(LigneCommande::class);
+    }
+
     
 
 }

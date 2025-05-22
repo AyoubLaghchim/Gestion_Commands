@@ -11,6 +11,8 @@ use App\Http\Controllers\RechercheController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
+
 
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -65,20 +67,24 @@ Route::middleware(['admin'])->group(function () {
 // 🚀 Espace Client
 
 Route::middleware(['user'])->group(function () {
-    Route::get('/user',[UserController::class,'index'])
-        ->name('menu');
-    Route::get('/explore',[UserController::class,'explorer'])
-        ->name('explore');
     
     // 🚀 Page Profil (Vue pour l'admin)
     Route::get('/user/profile', [UserController::class , 'profile'])->name('user.profile');
-
+    
     Route::get('/user/profile/edit',[UserController::class , 'edit'])->name('user.profile.edit');
     
     Route::put('/user/profile/update',[UserController::class , 'update'])->name('user.profile.update');
-
+    
     Route::get('/user/profile/change-password',[UserController::class , 'password'])->name('user.profile.passwordChange');
-
+    
     // update password
     Route::put('/user/password/update', [UserController::class, 'updatePassword'])->name('profile.passwordUpdate');
+    
+    // Menu
+    Route::get('/user',[DashboardController::class,'index'])->name('menu');
+    Route::get('/explore',[UserController::class,'explorer'])->name('explore');
+    Route::get('/user/commandes/{id}',[DashboardController::class,'show'])->name('user.detail');
+    Route::get('/user/commands/create',[DashboardController::class,'create'])->name('user.commande.create');
+    Route::post('/user/commands/create',[DashboardController::class,'store'])->name('user.commande.store');
+    Route::get('/user/produits',[DashboardController::class,'showProduits'])->name('user.produits');
 });

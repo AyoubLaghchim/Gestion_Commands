@@ -50,6 +50,27 @@
                 </div>
             </div>
         </div>
+        <!-- Carte catégorié -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <a href="{{ route('categories.index') }}" class="text-decoration-none">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    Catégories 
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $TotalCategories }}</div>
+                            </a>
+                        </div>
+                        <div class="col-auto">
+                            <i class="material-symbols-outlined text-gray-300" style="font-size: 2rem">category</i>
+                            {{-- <i class="material-symbols-outlined >shopping_cart</i> --}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Carte Produits -->
         <div class="col-xl-3 col-md-6 mb-4">
@@ -105,11 +126,47 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $commandesEnAttente }}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="material-symbols-outlined text-gray-300" style="font-size: 2rem">pending</i>
+                            <i class="material-symbols-outlined text-gray-300" style="font-size: 2rem">hourglass_top</i>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <!-- Carte Annuller -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                Annuller </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $commandesAnnuller }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="material-symbols-outlined text-gray-300" style="font-size: 2rem">cancel</i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{-- </div> --}}
+        <!-- Carte Terminer -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Terminé</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $commandeslivrer }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="material-symbols-outlined text-gray-300" style="font-size: 2rem">check_circle</i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 

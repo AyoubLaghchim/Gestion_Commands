@@ -17,9 +17,15 @@ class Commande extends Model
     {
         return $this->hasMany(LigneCommande::class);
     }
-public function Produit()
+    public function Produit()
     {
         return $this->belongsToMany(Produit::class);
     }
+
+    public function lignes()
+    {
+        return $this->hasMany(LigneCommande::class);
+    }
+
 
 }

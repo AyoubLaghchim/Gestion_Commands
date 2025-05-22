@@ -7,7 +7,7 @@
         <a href="{{ route('commandes.create') }}" class="btn btn-success">Ajouter Commande</a>
     </div>
     <div class="mb-3">
-        <a href="{{ url()->previous() }}" class="btn btn-outline-secondary">← Retour</a>
+        <a href="{{ route('home') }}" class="btn btn-outline-secondary">← Retour</a>
     </div>
     @if(session('success'))
         <div class="alert alert-success">

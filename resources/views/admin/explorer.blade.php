@@ -53,6 +53,17 @@
             </div>
         </div>
 
+        <!-- Carte 4 : Catégories -->
+        <div class="col">
+            <div class="card h-100 text-center border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="mb-3 fs-1 text-info">🏷️ </div>
+                    <h5 class="card-title fw-bold">Catégories</h5>
+                    <p class="card-text">Découvré l'enssemble des catégories.</p>
+                    <a href="{{ route('categories.index') }}" class="btn btn-outline-info">Accéder</a>
+                </div>
+            </div>
+        </div>
         <!-- Carte 5 : Statistiques -->
         <div class="col">
             <div class="card h-100 text-center border-0 shadow-sm">

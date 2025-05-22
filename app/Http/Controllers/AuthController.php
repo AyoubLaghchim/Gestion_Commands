@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Produit;
 use App\Models\Commande;
 use App\Models\Client;
+use App\Models\Categorie;
 
 class AuthController extends Controller
 {
@@ -132,10 +133,13 @@ class AuthController extends Controller
             'clientsCount' => Client::count(),
             'commandesMois' => Commande::whereMonth('created_at', now()->month)->count(),
             'commandesEnAttente' => Commande::where('etat_commande', 'en cour')->count(),
+            'commandeslivrer' => Commande::where('etat_commande', 'terminée')->count(),
+            'commandesAnnuller' => Commande::where('etat_commande', 'annulée')->count(),
             'commandesRecentes' => Commande::with('client')->latest()->take(5)->get(),
             'commandes' => Commande::with('client')->latest()->take(10)->get(),
             'chartLabels' => ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil'],
-            'chartData' => [65, 59, 80, 81, 56, 55, 40] // Remplacer par des données réelles
+            'chartData' => [65, 59, 80, 81, 56, 55, 40] ,// Remplacer par des données réelles
+            'TotalCategories' => Categorie::count(),
         ]);
     }   
 // Déconnexion

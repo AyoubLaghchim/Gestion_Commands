@@ -38,7 +38,8 @@ class CommandeController extends Controller
     ]);
 
     Commande::create([
-        'date_commande' => $request->date_commande,
+            // 'date_commande' => now(),
+        'date_commande' => now(),
         'client_id' => $request->client_id, // Ici, il doit être présent !
         'etat_commande' => $request->etat_commande,
     ]);
