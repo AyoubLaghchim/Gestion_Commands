@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\User;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Client>
@@ -16,12 +17,17 @@ class ClientFactory extends Factory
      */
     public function definition(): array
     {
+        // return [
+        //     //
+        //        'nom' => fake()->name(),
+        //         'telephone' => fake()->phoneNumber(),
+        //         'adresse' => fake()->address(),
+        // ];
         return [
-            //
-               'nom' => fake()->name(),
-                'email' => fake()->unique()->safeEmail(),
-                'telephone' => fake()->phoneNumber(),
-                'adresse' => fake()->address(),
-        ];
+        'nom' => fake()->name(),  // Par défaut
+        'telephone' => $this->fakerfake()->phoneNumber(),
+        'adresse' => fake()->address(),
+        'user_id' => null,
+    ];
     }
 }

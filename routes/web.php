@@ -47,10 +47,12 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/profile', [ProfileController::class , 'index'])->name('profile');
 
     Route::get('/profile/edit',[ProfileController::class , 'edit'])->name('profile.edit');
+    
+    Route::put('/profile/admin/update',[ProfileController::class , 'update'])->name('admin.profile.update');
 
-    Route::get('/profile/change-password',[ProfileController::class , 'password'])->name('profile.passwordChange');
+    Route::get('/profile/changePassword',[ProfileController::class , 'password'])->name('admin.profile.password');
 
-    Route::put('/profile/{id}',[ProfileController::class , 'update'])->name('profile.update');
+    Route::put('/profile/changePassword',[ProfileController::class , 'updatePassword'])->name('admin.password.change');
     
     // Route::resource('profile', RechercheController::class);
 
@@ -73,7 +75,7 @@ Route::middleware(['user'])->group(function () {
 
     Route::get('/user/profile/edit',[UserController::class , 'edit'])->name('user.profile.edit');
     
-    Route::put('/user/edit',[UserController::class , 'update'])->name('user.profile.update');
+    Route::put('/user/profile/update',[UserController::class , 'update'])->name('user.profile.update');
 
     Route::get('/user/profile/change-password',[UserController::class , 'password'])->name('user.profile.passwordChange');
 

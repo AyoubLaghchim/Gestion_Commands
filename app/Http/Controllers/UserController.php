@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Client;
 
 class UserController extends Controller
 {
@@ -36,30 +37,34 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+   public function update(Request $request)
     {
         // Validation des données reçues
         $request->validate([
-            'name'      => 'required|string|max:255',
-            'email'     => 'required|email|unique:users,email,' . $id,
+            'nom'      => 'required|string|max:255',
+            'email'     => 'required|email|unique:users,email,' . Auth::user()->id,
             'telephone' => 'required|string|max:20',
             'adresse'   => 'required|string|max:255',
         ]);
-    
-        // Récupérer uniquement les champs autorisés
-        $data = $request->only(['name', 'email', 'telephone', 'adresse']);
-    
-        // Trouver l'utilisateur par son id
-        $profile = User::findOrFail($id);
-    
-        // Mettre à jour les infos
-        $profile->update($data);
-    
-        // Retour avec message de succès
-        return redirect()->route('user.profile')->with('success', 'Profil mis à jour avec succès !');
 
-        // return redirect()->back()->with("success", "Profil mis à jour avec succès !");
+        // Données pour chaque table
+        $userdata = $request->only(['nom', 'email']);
+        $clientdta = $request->only(['nom', 'telephone', 'adresse']);
+
+        // Récupérer l'utilisateur
+        $updateUser = User::findOrFail(id: Auth::user()->id);
+        $updateUser->update($userdata);
+
+        // Récupérer le client lié à l'utilisateur
+        $updateClient = $updateUser->client; // Doit être une relation définie dans le modèle User
+
+        if ($updateClient) {
+            $updateClient->update($clientdta);
+        }
+
+        return redirect()->route('user.profile')->with('success', 'Profil mis à jour avec succès !');
     }
+
     
     public function password(){
 
@@ -67,6 +72,7 @@ class UserController extends Controller
     }
     // password update
 
+    
     public function updatePassword(Request $request)
     {
         $request->validate([

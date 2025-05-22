@@ -28,7 +28,7 @@
                     <div class="row mb-4">
                         <div class="col-md-6 mb-3">
                             <label for="name" class="form-label fw-semibold">Nom complet</label>
-                            <input type="text" class="form-control bg-white" id="name" value="{{ Auth::user()->name }}" disabled>
+                            <input type="text" class="form-control bg-white" id="name" value="{{ Auth::user()->client->nom }}" disabled>
                         </div>
 
                         <div class="col-md-6 mb-3">
@@ -38,12 +38,12 @@
 
                         <div class="col-md-6 mb-3">
                             <label for="telephone" class="form-label fw-semibold">Téléphone</label>
-                            <input type="tel" class="form-control bg-white" id="telephone" value="{{ Auth::user()->telephone ?? 'Non renseigné' }}" disabled>
+                            <input type="tel" class="form-control bg-white" id="telephone" value="{{ Auth::user()->client->telephone ?? 'Non renseigné' }}" disabled>
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label for="adresse" class="form-label fw-semibold">Adresse</label>
-                            <input type="text" class="form-control bg-white" id="adresse" value="{{ Auth::user()->adresse ?? 'Non renseignée' }}" disabled>
+                            <input type="text" class="form-control bg-white" id="adresse" value="{{ Auth::user()->client->adresse ?? 'Non renseignée' }}" disabled>
                         </div>
                     </div>
 

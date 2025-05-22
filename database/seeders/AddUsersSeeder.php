@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Client;
 
@@ -14,23 +14,20 @@ class AddUsersSeeder extends Seeder
      */
     public function run(): void
     {
-        
-        User::create(
-            [
-                'id'=>'001',
-                'nom'=> 'Ayoub Laghchim',
-                'email'=> 'ayoublaghchim77@gmail.com',
-                'password'=> '123454321',
-                'role'=> 'admin',
-            ]);
-        Client::create(
-            [
-                'nom'=> 'Ayoub Laghchim',
-                'email'=> 'ayoublaghchim77@gmail.com',
-                'telephone'=> '0657002286',
-                'adresse'=> 'Marrakech',
-                'user_id' => '001'
-            ]);
-        
+        // Création d’un utilisateur
+        $user = User::create([
+            'nom' => 'Ayoub Laghchim',
+            'email' => 'ayoublaghchim77@gmail.com',
+            'password' => Hash::make('123454321'),
+            'role' => 'admin',
+        ]);
+        // Création du client associé
+        Client::create([
+            'nom' => 'Ayoub Laghchim',
+            'telephone' => '0657002286',
+            'adresse' => 'Marrakech',
+            'user_id' => $user->id, // Récupération de l’ID généré automatiquement
+        ]);
+
     }
 }

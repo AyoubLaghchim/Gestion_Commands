@@ -4,12 +4,12 @@
 <div class="container my-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0">Liste des clients</h2>
-        <a href="{{ route('clients.create') }}" class="btn btn-success">
+        {{-- <a href="{{ route('clients.create') }}" class="btn btn-success">
             <i class="bi bi-plus-circle"></i> Ajouter un client
-        </a>
+        </a> --}}
     </div>
     <div class="mb-3">
-        <a href="{{ url()->previous() }}" class="btn btn-outline-secondary">← Retour</a>
+        <a href="{{ route('home') }}" class="btn btn-outline-secondary">← Retour</a>
     </div>
     <div class="table-responsive">
         <table class="table table-hover table-bordered shadow-sm align-middle">
@@ -19,6 +19,7 @@
                     <th scope="col">Nom</th>
                     <th scope="col">Email</th>
                     <th scope="col">Téléphone</th>
+                    <th scope="col">Rôle</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -27,8 +28,9 @@
                     <tr>
                         {{-- <td>{{ $client->id }}</td> --}}
                         <td>{{ $client->nom }}</td>
-                        <td>{{ $client->email }}</td>
+                        <td>{{ $client->user->email }}</td>
                         <td>{{ $client->telephone }}</td>
+                        <td>{{ $client->user->role }}</td>
                         <td>
                             <a href="{{ route('clients.show', $client->id) }}" class="btn btn-sm btn-info me-1">
                                 <i class="bi bi-eye">View</i>

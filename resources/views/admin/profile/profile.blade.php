@@ -40,8 +40,8 @@
                 <div class="card-body bg-light">
                     <div class="row mb-4">
                         <div class="col-md-6 mb-3">
-                            <label for="name" class="form-label fw-semibold">Nom complet</label>
-                            <input type="text" class="form-control bg-white" id="name" value="{{ Auth::user()->name }}" disabled>
+                            <label for="nom" class="form-label fw-semibold">Nom complet</label>
+                            <input type="text" class="form-control bg-white" id="nom" value="{{ Auth::user()->nom }}" disabled>
                         </div>
 
                         <div class="col-md-6 mb-3">
@@ -51,12 +51,16 @@
 
                         <div class="col-md-6 mb-3">
                             <label for="telephone" class="form-label fw-semibold">Téléphone</label>
-                            <input type="tel" class="form-control bg-white" id="telephone" value="{{ Auth::user()->telephone ?? 'Non renseigné' }}" disabled>
+                            <input type="tel" class="form-control bg-white" id="telephone" value="{{ Auth::user()->client->telephone ?? 'Non renseigné' }}" disabled>
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label for="adresse" class="form-label fw-semibold">Adresse</label>
-                            <input type="text" class="form-control bg-white" id="adresse" value="{{ Auth::user()->adresse ?? 'Non renseignée' }}" disabled>
+                            <input type="text" class="form-control bg-white" id="adresse" value="{{ Auth::user()->client->adresse ?? 'Non renseignée' }}" disabled>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="adresse" class="form-label fw-semibold">Rôle</label>
+                            <input type="text" class="form-control bg-white" id="adresse" value="{{ Auth::user()->role }}" disabled>
                         </div>
                     </div>
 
@@ -64,7 +68,7 @@
                         <a href="{{ route('profile.edit') }}" class="btn btn-outline-warning px-4">
                             ✏️ Modifier le profil
                         </a>
-                        <a href="{{ route('profile.passwordChange') }}" class="btn btn-outline-secondary px-4">
+                        <a href="{{ route('admin.profile.password') }}" class="btn btn-outline-secondary px-4">
                             🔒 Changer le mot de passe
                         </a>
                     </div>

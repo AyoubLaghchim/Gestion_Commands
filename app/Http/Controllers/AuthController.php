@@ -18,64 +18,100 @@ class AuthController extends Controller
     {
         return view('login.register');
     }
+    // public function register(Request $request)
+    // {
+    //     // Validation des données du formulaire d'inscription
+    //     $request->validate([
+    //         'nom' => 'required|string|max:255',
+    //         'email' => 'required|email|unique:users',
+    //         'telephone' =>'required|min:10',
+    //         'adresse' =>'required|string|max:300',
+    //         'password' => 'required|string|min:6|confirmed', // nécessite un champ 'password_confirmation'
+    //         'password_confirmation' => 'required|string|min:6',
+    //     ]);
+    //     // Vérification du mot de passe actuel
+    //     if ($request->password !== $request->password_confirmation) {
+    //         return back()->with('error', 'La confirmation du nouveau mot de passe ne correspond pas.');
+    //     }
+    //     // Création de l'utilisateur
+    //     $user = User::create([
+    //         'nom' => $request->nom,
+    //         'email' => $request->email,
+    //         'password' => Hash::make($request->password),
+    //     ]);
+    //     $client = Client::create([
+    //         'nom' => $request->nom,
+    //         'email' => $request->email,
+    //         'telephone' => $request->telephone,
+    //         'adresse' => $request->adresse,
+
+    //     ]);
+    //     // Connexion automatique après inscription
+    //     Auth::login($user);
+    //     return redirect()->route('login')->with('success', 'Inscription réussie ! Vous êtes maintenant connecté.');
+    // }
     public function register(Request $request)
     {
         // Validation des données du formulaire d'inscription
         $request->validate([
-            'name' => 'required|string|max:255',
+            'nom' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
-            'telephone' =>'required|min:10',
-            'adresse' =>'required|string|max:300',
-            'password' => 'required|string|min:6|confirmed', // nécessite un champ 'password_confirmation'
-            'password_confirmation' => 'required|string|min:6',
+            'telephone' => 'required|min:10',
+            'adresse' => 'required|string|max:300',
+            'password' => 'required|string|min:6|confirmed',
         ]);
 
         // Création de l'utilisateur
         $user = User::create([
-            'name' => $request->name,
+            'nom' => $request->nom,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'password_confirmation' => Hash::make($request->password_confirmation),
-
         ]);
-        $client = Client::create([
-            'name' => $request->name,
-            'email' => $request->email,
+
+        // Création du client lié à l'utilisateur
+        Client::create([
+            'user_id' => $user->id, // lier avec le user
+            'nom' => $request->nom,
             'telephone' => $request->telephone,
             'adresse' => $request->adresse,
-
         ]);
+
         // Connexion automatique après inscription
         Auth::login($user);
+
         return redirect()->route('login')->with('success', 'Inscription réussie ! Vous êtes maintenant connecté.');
     }
+
+
+
+
     public function showLoginForm()
     {
         return view('login.login');
     }
     // Traitement de la connexion
     public function login(Request $request)
-{
-    $credentials = $request->validate([
-        'email' => 'required|email',
-        'password' => 'required',
-    ]);
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-    if (Auth::attempt($credentials)) {
-        $request->session()->regenerate();
-        
-        // Vérification du rôle de l'utilisateur
-        if (Auth::user()->role === 'admin') {
-            return redirect()->intended('/')->with('success', 'Connexion en tant qu\'admin !');
-        } else {
-            return redirect()->intended('/user')->with('success', 'Connexion réussie !');
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            
+            // Vérification du rôle de l'utilisateur
+            if (Auth::user()->role === 'admin') {
+                return redirect()->intended('/')->with('success', 'Connexion en tant qu\'admin !');
+            } else {
+                return redirect()->intended('/user')->with('success', 'Connexion réussie !');
+            }
         }
-    }
 
-    return back()->withErrors([
-        'email' => 'Email ou mot de passe incorrect.',
-    ]);
-}
+        return back()->withErrors([
+            'email' => 'Email ou mot de passe incorrect.',
+        ]);
+    }
 
 
     // Page protégée

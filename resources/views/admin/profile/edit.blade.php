@@ -8,23 +8,23 @@
                 <div class="card-header bg-gradient bg-primary text-white py-3 rounded-top-4">
                     <h4 class="mb-0 text-center">👤 Modifier Profil</h4>
                 </div>
-                <form method="POST" action="{{ route('profile.update', Auth::user()->id) }}">
+                <form method="POST" action="{{ route('admin.profile.update')}}">
                     @csrf
                     @method('PUT')
                     <div class="card-body bg-light">
                         <div class="row mb-4">
                             <div class="col-md-6 mb-3">
-                                <label for="name" class="form-label fw-semibold">Nom complet</label>
+                                <label for="nom" class="form-label fw-semibold">Nom complet</label>
                                 <input 
                                     type="text" 
-                                    class="form-control bg-white @error('name') is-invalid @enderror" 
-                                    id="name" 
-                                    name="name" 
-                                    value="{{ old('name', Auth::user()->name) }}"
-                                    aria-describedby="nameError"
+                                    class="form-control bg-white @error('nom') is-invalid @enderror" 
+                                    id="nom" 
+                                    name="nom" 
+                                    value="{{ old('nom', Auth::user()->nom) }}"
+                                    aria-describedby="nomError"
                                 >
-                                @error('name')
-                                    <div id="nameError" class="invalid-feedback">{{ $message }}</div>
+                                @error('nom')
+                                    <div id="nomError" class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col-md-6 mb-3">
@@ -48,7 +48,7 @@
                                     class="form-control bg-white @error('telephone') is-invalid @enderror" 
                                     id="telephone" 
                                     name="telephone" 
-                                    value="{{ old('telephone', Auth::user()->telephone ?? '') }}"
+                                    value="{{ old('telephone', Auth::user()->client->telephone ?? '') }}"
                                     aria-describedby="telephoneError"
                                 >
                                 @error('telephone')
@@ -62,7 +62,7 @@
                                     class="form-control bg-white @error('adresse') is-invalid @enderror" 
                                     id="adresse" 
                                     name="adresse" 
-                                    value="{{ old('adresse', Auth::user()->adresse ?? '') }}"
+                                    value="{{ old('adresse', Auth::user()->client->adresse ?? '') }}"
                                     aria-describedby="adresseError"
                                 >
                                 @error('adresse')

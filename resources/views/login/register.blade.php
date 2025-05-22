@@ -25,15 +25,15 @@
             @csrf
 
             <div>
-                <label for="name" class="block text-gray-600">Nom :</label>
-                <input type="text" name="name" id="name" value="{{ old('name') }}"
-                       class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                <label for="nom" class="block text-gray-600">Nom :</label>
+                <input type="text" name="nom" id="nom" value="{{ old('nom') }}"
+                       class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required>
             </div>
 
             <div>
                 <label for="email" class="block text-gray-600">Email :</label>
                 <input type="email" name="email" id="email" value="{{ old('email') }}"
-                       class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                       class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required>
             </div>
             <div>
                 <label for="telephone" class="block text-gray-600">Téléphone :</label>
@@ -49,13 +49,13 @@
             <div>
                 <label for="password" class="block text-gray-600">Mot de passe :</label>
                 <input type="password" name="password" id="password"
-                       class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                       class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required>
             </div>
 
             <div>
                 <label for="password_confirmation" class="block text-gray-600">Confirmer le mot de passe :</label>
                 <input type="password" name="password_confirmation" id="password_confirmation"
-                       class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                       class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required>
             </div>
 
             <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition duration-200">
