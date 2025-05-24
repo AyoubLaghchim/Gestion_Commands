@@ -12,7 +12,7 @@
             <label for="email" class="form-label">Description</label>
             <input type="text" class="form-control" id="description" name="description" value="{{ old('description') }}" required>
         </div>
-        <a href="{{Route('categories.index')}}" class="btn btn-secondary" type="button">Annulée</a>
+        <a href="{{Route('categories.index')}}" class="btn btn-secondary" type="button">Annuler</a>
         <button type="submit" class="btn btn-success">Ajouter</button>
     </form>
 </div>

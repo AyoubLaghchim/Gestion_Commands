@@ -33,12 +33,35 @@ class ProduitController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    
     public function store(Request $request)
     {
-        //
-        $produit = Produit::create($request->all());
-        return redirect()->Route('produits.index')->with('success', 'Produit ajoutée avec succès !');
+        $request->validate([
+            'nom'            => 'required|string|max:255',
+            'prix_unitaire'  => 'required|numeric|min:0',
+            'description'    => 'required|string',
+            'stock'          => 'required|integer|min:0',
+            'categorie_id'   => 'required|exists:categories,id',
+            'image'          => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Préparation des données
+        $data = $request->only(['nom', 'prix_unitaire', 'description', 'stock', 'categorie_id']);
+
+        // Gestion de l'image si présente
+        if ($request->hasFile('image')) {
+            $imageName = time() . '_' . $request->image->getClientOriginalName();
+            $request->image->move(public_path('images/produits'), $imageName);
+            $data['image'] = $imageName;
+        }
+
+        // Création du produit
+        Produit::create($data);
+
+        return redirect()->route('produits.index')->with('success', 'Produit ajouté avec succès.');
     }
+
+
 
     /**
      * Display the specified resource.
@@ -67,18 +90,36 @@ class ProduitController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $request->validate([
-        //     'nom' => 'required|string|max:255',
-        //     'prix' => 'required|numeric',
-        //     'quantite' => 'required|integer',
-        //     'categorie_id' => 'required|exists:categories,id',
-        // ]);
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'prix_unitaire' => 'required|numeric|min:0',
+            'description' => 'required|string',
+            'stock' => 'required|integer|min:0',
+            'categorie_id' => 'required|exists:categories,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
 
         $produit = Produit::findOrFail($id);
-        $produit->update($request->all());
 
-        return redirect()->route('produits.index')->with('success', 'Produit modifié avec succès !');
-}
+        $data = $request->only(['nom', 'prix_unitaire', 'description', 'stock', 'categorie_id']);
+
+        // S'il y a une nouvelle image
+        if ($request->hasFile('image')) {
+            // Supprimer l'ancienne image si elle existe
+            if ($produit->image && file_exists(public_path('images/produits/' . $produit->image))) {
+                unlink(public_path('images/produits/' . $produit->image));
+            }
+
+            // Enregistrer la nouvelle image
+            $filename = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images/produits'), $filename);
+            $data['image'] = $filename;
+        }
+
+        $produit->update($data);
+
+        return redirect()->route('produits.index')->with('success', 'Produit mis à jour avec succès.');
+    }
 
 
     /**

@@ -17,8 +17,8 @@
     <table class="table table-bordered ">
         <thead class="table-secondary text-center">
             <tr>
-                <th>ID</th>
                 <th>Client</th>
+                <th>Produit</th>
                 <th>Date de Commande</th>
                 <th>État</th>
                 <th>Actions</th>
@@ -27,8 +27,17 @@
         <tbody>
         @foreach($commandes as $commande)
             <tr>
-                <td>{{ $commande->id }}</td>
                 <td>{{ $commande->client->nom }}</td>
+
+                <td>
+                    @foreach($commande->ligneCommandes as $ligne)
+                        <div class="d-flex align-items-center mb-1">
+                            <img src="{{ asset('images/produits/' . $ligne->produit->image) }}" alt="{{ $ligne->produit->nom }}" style="width: 40px; height: 40px; object-fit: cover; margin-right: 8px;">
+                            <span>{{ $ligne->produit->nom }} (x{{ $ligne->quantite }})</span>
+                        </div>
+                    @endforeach
+                </td>
+
                 <td>{{ $commande->date_commande }}</td>
                 <td class="text-center">
                     @if ($commande->etat_commande === 'en cour')

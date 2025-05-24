@@ -20,12 +20,6 @@
 
             <form action="{{ route('commandes.store') }}" method="POST">
                 @csrf
-                
-                {{-- <div class="mb-3">
-                    <label for="date_commande" class="form-label">Date de Commande</label>
-                    <input type="date" class="form-control" id="date_commande" name="date_commande" value="{{ old('date_commande') }}" required>
-                </div> --}}
-
                 <div class="mb-3">
                     <label for="client_id" class="form-label">Client</label>
                     <select class="form-select" id="client_id" name="client_id" required>

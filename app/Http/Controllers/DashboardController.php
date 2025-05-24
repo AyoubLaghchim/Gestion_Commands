@@ -51,31 +51,53 @@ class DashboardController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'produit_id' => 'required|exists:produits,id',
-            'quantite' => 'required|integer|min:1',
-        ]);
+        {
+            // Validation : 'produits' doit être une chaîne JSON valide et non vide
+            $request->validate([
+                'produits' => ['required', 'string'],
+            ]);
 
-        $user = Auth::user();
+            $user = Auth::user();
 
-        // Créer la commande associée au client
-        $commande = Commande::create([
-            'client_id' => $user->client->id,  // Assure-toi que la relation user->client existe
-            'date_commande' => now(),
-            'statut' => 'en cour', // ou autre statut par défaut
-        ]);
+            // Décoder le JSON contenant les produits sélectionnés
+            $produits = json_decode($request->input('produits'), true);
 
-        // Créer la ligne commande
-        LigneCommande::create([
-            'commande_id' => $commande->id,
-            'produit_id' => $request->produit_id,
-            'quantite' => $request->quantite,
-        ]);
+            // Vérifier que c'est bien un tableau
+            if (!is_array($produits) || empty($produits)) {
+                return back()->withErrors(['produits' => 'Veuillez sélectionner au moins un produit.'])->withInput();
+            }
 
-        return redirect()->route('menu', $commande->id)
-                        ->with('success', 'Commande passée avec succès !');
-    }
+            // Valider chaque produit dans le tableau
+            foreach ($produits as $prod) {
+                if (!isset($prod['id'], $prod['quantite']) || !is_numeric($prod['quantite']) || $prod['quantite'] < 1) {
+                    return back()->withErrors(['produits' => 'Données de produit invalides.'])->withInput();
+                }
+                // Vérifie que le produit existe bien en base
+                if (!Produit::find($prod['id'])) {
+                    return back()->withErrors(['produits' => "Le produit ID {$prod['id']} n'existe pas."])->withInput();
+                }
+            }
+
+            // Créer la commande associée au client
+            $commande = Commande::create([
+                'client_id' => $user->client->id,  // Assure-toi que la relation user->client existe
+                'date_commande' => now(),
+                'statut' => 'en cours', // ou autre statut par défaut
+            ]);
+
+            // Créer les lignes de commande pour chaque produit
+            foreach ($produits as $prod) {
+                LigneCommande::create([
+                    'commande_id' => $commande->id,
+                    'produit_id' => $prod['id'],
+                    'quantite' => $prod['quantite'],
+                ]);
+            }
+
+            return redirect()->route('menu', $commande->id)
+                ->with('success', 'Commande passée avec succès !');
+        }
+
     public function showProduits(){
         $produits = Produit::all();
         return view('users.showproduits',compact('produits'));

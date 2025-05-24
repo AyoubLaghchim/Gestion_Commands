@@ -59,13 +59,43 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-        $client = Client::findOrFail($id);
-        $client->update($request->all());
-        return redirect()->Route('clients.index');
-    }
+  public function update(Request $request, string $id)
+{
+    // Récupérer le client et son user avant la validation
+    $client = Client::with('user')->findOrFail($id);
+    $user   = $client->user;
+
+    // Validation
+    $request->validate([
+        // Champs Client
+        'nom'       => 'required|string|max:255',
+        'telephone' => 'required|string|max:20',
+        'adresse'   => 'required|string|max:255',
+
+        // Champs User
+        'email' => 'required|email|unique:users,email,' . $user->id,
+        'role'  => 'required|string|in:admin,client',
+    ]);
+
+    // Mise à jour du client
+    $client->update([
+        'nom'       => $request->nom,
+        'telephone' => $request->telephone,
+        'adresse'   => $request->adresse,
+    ]);
+
+    // Mise à jour de l'utilisateur lié
+    $user->update([
+        'email' => $request->email,
+        'role'  => $request->role,
+    ]);
+
+    return redirect()
+        ->route('clients.index')
+        ->with('success', 'Client et utilisateur mis à jour avec succès.');
+}
+
+
 
     /**
      * Remove the specified resource from storage.

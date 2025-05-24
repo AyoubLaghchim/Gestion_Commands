@@ -13,7 +13,9 @@ class CommandeController extends Controller
      */
     public function index()
     {
-        $commandes = Commande::with('client')->get();
+        // $commandes = Commande::with('client')->get();
+        $commandes = Commande::with('client', 'ligneCommandes.produit')->get();
+
         return view('admin.commandes.index', compact('commandes'));
     }
 
@@ -32,7 +34,7 @@ class CommandeController extends Controller
     public function store(Request $request)
 {
     $request->validate([
-        'date_commande' => 'required|date',
+        // 'date_commande' => 'required|date',
         'client_id' => 'required|exists:clients,id',
         'etat_commande' => 'required|in:en cour,terminée,annulée'
     ]);

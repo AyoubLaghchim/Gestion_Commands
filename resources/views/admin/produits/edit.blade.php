@@ -7,7 +7,7 @@
             <h4 class="mb-0">Modifier le produit : {{ $produit->nom }}</h4>
         </div>
         <div class="card-body">
-            <form action="{{ route('produits.update', $produit->id) }}" method="POST">
+            <form action="{{ route('produits.update', $produit->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="mb-3">
@@ -21,7 +21,11 @@
                     <input type="number" class="form-control" id="prix_unitaire" name="prix_unitaire"
                            value="{{ $produit->prix_unitaire }}" step="0.01" required>
                 </div>
-
+                 
+                <div class="mb-4">
+                    <label for="image" class="block font-medium mb-2">Image du produit</label>
+                    <input type="file" name="image" id="image" class="w-full border rounded p-2">
+                </div>
                 <div class="mb-3">
                     <label for="stock" class="form-label">Quantité</label>
                     <input type="number" class="form-control" id="stock" name="stock"

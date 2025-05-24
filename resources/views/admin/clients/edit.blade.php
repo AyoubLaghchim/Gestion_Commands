@@ -20,7 +20,7 @@
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" name="email"
-                        value="{{ $client->email }}" required>
+                        value="{{ $client->user->email }}" required>
                 </div>
 
                 <div class="mb-3">
@@ -34,9 +34,14 @@
                     <input type="text" class="form-control" id="adresse" name="adresse"
                         value="{{ $client->adresse }}" required>
                 </div>
+                <div class="mb-3">
+                    <label for="role" class="form-label">Rôle</label>
+                    <input type="text" class="form-control" id="role" name="role"
+                        value="{{ $client->user->role }}" required>
+                </div>
 
                 <div class="d-flex justify-content-end">
-                    <a href="{{ url()->previous() }}" class="btn btn-outline-secondary me-2">Annuler</a>
+                    <a href="{{ route('clients.index') }}" class="btn btn-outline-secondary me-2">Annuler</a>
                     <button type="submit" class="btn btn-success">Enregistrer les modifications</button>
                 </div>
             </form>

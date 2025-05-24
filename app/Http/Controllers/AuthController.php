@@ -19,38 +19,6 @@ class AuthController extends Controller
     {
         return view('login.register');
     }
-    // public function register(Request $request)
-    // {
-    //     // Validation des données du formulaire d'inscription
-    //     $request->validate([
-    //         'nom' => 'required|string|max:255',
-    //         'email' => 'required|email|unique:users',
-    //         'telephone' =>'required|min:10',
-    //         'adresse' =>'required|string|max:300',
-    //         'password' => 'required|string|min:6|confirmed', // nécessite un champ 'password_confirmation'
-    //         'password_confirmation' => 'required|string|min:6',
-    //     ]);
-    //     // Vérification du mot de passe actuel
-    //     if ($request->password !== $request->password_confirmation) {
-    //         return back()->with('error', 'La confirmation du nouveau mot de passe ne correspond pas.');
-    //     }
-    //     // Création de l'utilisateur
-    //     $user = User::create([
-    //         'nom' => $request->nom,
-    //         'email' => $request->email,
-    //         'password' => Hash::make($request->password),
-    //     ]);
-    //     $client = Client::create([
-    //         'nom' => $request->nom,
-    //         'email' => $request->email,
-    //         'telephone' => $request->telephone,
-    //         'adresse' => $request->adresse,
-
-    //     ]);
-    //     // Connexion automatique après inscription
-    //     Auth::login($user);
-    //     return redirect()->route('login')->with('success', 'Inscription réussie ! Vous êtes maintenant connecté.');
-    // }
     public function register(Request $request)
     {
         // Validation des données du formulaire d'inscription
